@@ -5,12 +5,13 @@ public class A07Throw {
         //new ArithmeticException(); //객체만 생성
         throw new ArithmeticException(); //생성한 객체로 오류 발생
     }
+
     //선택지
-    //1.예외를 다시 위임 (최종사용자에서만 trycatch 사용)
+    //1.예외를 다시 위임 (최종사용자에서만 try()catch 사용) ---①
     //2.내가 최종사용자가 되는 방법
-    //3.내가 최종사용자이면서 전가하는 방법 ⇒ catch에서 오류를 강제로 발생
-    // 내가 다른 함수를 사용하는데 오류가 발생했어 나를 사용하는 너도 그 오류를 알아야 해!
-    static void strSum(String a,String b) throws Exception {
+    //3.내가 최종사용자이면서 전가하는 방법 ⇒ catch에서 오류를 강제로 발생 ---③
+    //└─ 내가 다른 함수를 사용하는데 오류가 발생했어 나를 사용하는 너도 그 오류를 알아야 해!
+    static void strSum(String a,String b) throws Exception { //---①
         //sum()을 꼭 사용해야함
         int i = Integer.parseInt(a);
         int i2 = Integer.parseInt(b);
@@ -18,7 +19,7 @@ public class A07Throw {
             sum(i, i2);
         }catch (Exception e){
             System.out.println("수학적 오류");
-            throw new Exception("수학적 오류 전가 Go");
+            throw new Exception("수학적 오류 전가 Go"); //---③
         }
     }
 

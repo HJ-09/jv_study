@@ -98,7 +98,7 @@ public static void readFile() throws IOException {
 7. throw와 throws 차이
 
 항목	    설명
-throw	예외를 발생시킴 (실행 시)
+throw	예외를 발생시킴 (실행 시) → catch에서!
 throws	예외를 위임함 (선언 시)
 
 throw new IllegalArgumentException("잘못된 값");

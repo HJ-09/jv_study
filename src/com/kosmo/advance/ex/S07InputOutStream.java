@@ -30,17 +30,17 @@ public class S07InputOutStream {
 
 - 스트림의 방향성
 	•	입력(Input) 스트림
-        외부(파일, 키보드, 네트워크 등)에서 데이터를 읽어와 프로그램 내부로 가져오는 흐름
+        → 외부(파일, 키보드, 네트워크 등)에서 데이터를 읽어와 프로그램 내부로 가져오는 흐름
             예:
             •	키보드에서 사용자 입력을 자바 어플이 받기
             •	OS의 파일 시스템에서 자바 어플이 데이터를 읽기
             •	서버로부터 응답 받기
 
     •	출력(Output) 스트림
-        프로그램 내부에서 생성된 데이터를 외부(파일, 화면, 네트워크 등)로 보내는 흐름
+        → 프로그램 내부에서 생성된 데이터를 외부(파일, 화면, 네트워크 등)로 보내는 흐름
             예:
             •	파일에 데이터 저장
-            •	콘솔에 출력 System.out.print("안녕"); // out ⇒ OutputStream
+            •	콘솔에 출력 System.out.print("안녕"); // out의 타입 ⇒ OutputStream
             •	네트워크를 통해 데이터 전송
 
 
@@ -63,18 +63,16 @@ public class S07InputOutStream {
 
 - 예시 흐름
 
-텍스트 파일에서 읽어 화면에 출력
+◇ 텍스트 파일에서 읽어 화면에 출력
 
 [파일] → FileReader → BufferedReader → 프로그램 → System.out → [화면 출력]
 
-소켓 통신 예시
+◇ 소켓 통신 예시
 
-[클라이언트 프로그램]
-  ↓ OutputStream           ↑ InputStream
-[서버 프로그램]
+              [클라이언트 프로그램]
+   OutputStream ↓           ↑ InputStream
+                [서버 프로그램]
 
-
-⸻
 
 ⸻
 ⸻
@@ -131,7 +129,7 @@ public class S07InputOutStream {
 4-1. FileReader (문자 스트림)
 
     //auto close 문법 ⇒ try()에 생성한 객체의 close 함수를 finally 지점에 호출.
-    try (FileReader reader = new FileReader("hello.txt")) { //try() 내에서 생성한 변수는 try의 지역변수가 됨.
+    try (FileReader reader = new FileReader("hello.txt")) { //try() 내에서 생성한 변수는 try의 지역변수가 됨. 단점일수도..?
         int data;
         while ((data = reader.read()) != -1) {
             System.out.print((char) data);
@@ -213,18 +211,18 @@ while ((data = bis.read()) != -1) {
 
 - 대표적인 직렬화 사용 사례
 	•	1. 파일 저장용 직렬화 (ObjectOutputStream)
-        → 객체를 .ser 같은 바이너리 파일로 저장
-        → 학습용이나 내부 캐시 등에서 사용
+         → 객체를 .ser 같은 바이너리 파일로 저장
+         → 학습용이나 내부 캐시 등에서 사용
 	•	2. 네트워크 전송용 직렬화 (Socket, RMI)
-        → 서버 간 데이터 객체 전송 시
-        → 자바 RMI(Remote Method Invocation)는 객체 직렬화 필수
+         → 서버 간 데이터 객체 전송 시
+         → 자바 RMI(Remote Method Invocation)는 객체 직렬화 필수
 	•	3. DB 저장 / ORM (예: JPA)
-        → 객체를 DB로 옮기기 위해 상태를 분해하고 직렬화(영속화)
-        → JPA는 내부적으로 객체를 식별 가능한 형태로 바꾸고 복원
-        → 복잡한 객체 필드를 @Embeddable, @ElementCollection 등으로 분해 직렬화
+         → 객체를 DB로 옮기기 위해 상태를 분해하고 직렬화(영속화)
+         → JPA는 내부적으로 객체를 식별 가능한 형태로 바꾸고 복원
+         → 복잡한 객체 필드를 @Embeddable, @ElementCollection 등으로 분해 직렬화
 	•	4. JSON 직렬화 (예: Jackson, Gson 등)
-        → 객체 → JSON 문자열로 변환
-        → HTTP 응답/요청, API 통신, 프론트-백 간 통신에 필수
+         → 객체 → JSON 문자열로 변환
+         → HTTP 응답/요청, API 통신, 프론트-백 간 통신에 필수
 ⸻
 - 자바에서 직렬화 구현 방법
 	•	클래스에 implements Serializable 명시

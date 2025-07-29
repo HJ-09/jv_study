@@ -10,13 +10,13 @@ public class A05TryCatch {
 
         int[]arr={1,2,3};
 
-        try{ //예외를 잡아서 노력할고야 ..? 뭐라고..?
+        try{
             //try 블럭에서 오류가 발생하면 catch에서 오류를 잡는다.
             i=arr[4]; //예외
-            System.out.println("안뇽"); //예외가 발생한 시점 이후의 코드는 무시. ∴ 출력 x. try{}catch 안에 코드를 넣을 때 잘 생각해야함.
+            System.out.println("안뇽"); //예외가 발생한 시점 이후의 코드는 무시. ∴ 출력 x. try{}catch 안에 코드를 넣을 땐 잘 생각해야함.
         }catch (ArrayIndexOutOfBoundsException e) {//특정오류 잡아내고 싶으면 이렇게 ㅎㅏ면 댐.
             System.out.println(e.toString());
-        }catch (Exception e){ //==else. 중첩가능, 근데 최대한 안 하는게 좋음.
+        }catch (Exception e){ //==else. 중첩가능, 근데 최대한 안 하는게 좋음. 차라리 try()cathc를 2개 쓰는게..
             //Exception : 모든 예외 클래스의 부모. ∴ 모든 예외처리를 잡을 수 이뜸!
             System.out.println(e.toString());
         }finally { //← 무조건 실행되는 블럭임.
