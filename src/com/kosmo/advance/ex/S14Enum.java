@@ -3,19 +3,20 @@ package com.kosmo.advance.ex;
 public class S14Enum {
     /*
 
-1. enum은 클래스처럼 동작하는 열거형 타입이다.
+    1. enum은 클래스처럼 동작하는 열거형 타입이다.
     Java에서 enum은 단순한 상수 집합이 아니라 내부적으로 클래스로 처리되는 참조형 타입입니다.
 
     예시:
 
     enum Day {
+        //┌─ public static final Day MONDAY=new DAY(); == MONDAY //객체로 고유값을 갖는 상태
         MONDAY, TUESDAY, WEDNESDAY
     }
 
 
 ⸻
 
-2. enum 상수는 내부적으로 public static final 객체로 생성된다.
+    2. enum 상수는 내부적으로 public static final 객체로 생성된다.
     MONDAY, TUESDAY와 같은 상수들은 각각 Day 클래스의 객체로 한 번만 생성되어 공유된다.
 
     예시:
@@ -26,8 +27,16 @@ public class S14Enum {
 
 ⸻
 
-3. enum은 switch 문에서도 사용할 수 있다.
+    3. enum은 switch 문에서도 사용할 수 있다.
     enum 타입은 switch 문의 조건식에 사용할 수 있는 유일한 사용자 정의 타입이다.
+    switch는 문자열(자바가 제공하는 type)을 제외하고 모든 자료형을 쓸 수 없음. 근데 enum은 사용가능 ^-^
+    switch ⇒ 문자열, 기본형, enum을 동등비교하는 조건문
+
+    🔘 면접 예상 질문 🔘
+    //if와 switch 조건문의 차이
+    //switch 조건문의 특징
+    //switch를 사용할 수 있는 상황에서 if와 switch 중 무엇을 선호하는지? → switch욥! why? 유지보수가 좋고, 가독성 좋고, 동작속도가 빠릅니당.
+
 
     예시:
 
@@ -39,12 +48,13 @@ public class S14Enum {
 
 ⸻
 
-4. enum은 생성자를 가질 수 있지만, 외부에서 호출할 수 없다.
+    4. enum은 생성자를 가질 수 있지만, 외부에서 호출할 수 없다.
     enum의 생성자는 자동으로 private로 제한되어 외부에서 직접 생성할 수 없다. 대신 내부에서 상수 정의 시 호출된다.
 
     예시:
 
     enum Level {
+        //┌─ public static final Level LOW=new Level(1); == LOW(1) /LOW.code → 1
         LOW(1), MEDIUM(2), HIGH(3);
 
         private final int code;
@@ -59,7 +69,7 @@ public class S14Enum {
 
 ⸻
 
-5. enum은 필드와 메서드를 정의할 수 있다.
+    5. enum은 필드와 메서드를 정의할 수 있다.
     클래스처럼 필드와 메서드를 가질 수 있으며, 각 상수마다 다른 값이나 동작을 부여할 수 있다.
 
     예시:
@@ -82,7 +92,7 @@ public class S14Enum {
 
 ⸻
 
-7. ordinal() 메서드로 선언 순서(인덱스)를 확인할 수 있다.
+    7. ordinal() 메서드로 선언 순서(인덱스)를 확인할 수 있다.
     enum의 각 상수는 0부터 시작하는 고유한 순번(ordinal) 을 갖는다.
 
     예시:
@@ -98,11 +108,11 @@ public class S14Enum {
     예시:
 
     Day d = Day.valueOf("TUESDAY");
-
+    //  └─ d=Day.TEUSDAY; == d
 
     ⸻
 
-9. 열거형 상수마다 개별 동작을 정의할 수도 있다. (상수별 구현)
+    9. 열거형 상수마다 개별 동작을 정의할 수도 있다. (상수별 구현)
     각 상수에 대해 오버라이딩된 메서드를 제공하면 상수별 특성 동작을 만들 수 있다.
 
     예시:
@@ -118,22 +128,23 @@ public class S14Enum {
         abstract double area(double value);
     }
 
-10. 상수보다 enum을 사용해야 하는 이유
+    10. 상수보다 enum을 사용해야 하는 이유 ★★★
 
-    1. 가독성과 그룹화
+    🔘 면접에 잘 나옵니다 🔘
+
+    1. 타입 안정성
+    int나 String 상수는 다른 값을 넣을 수 있지만, enum은 지정된 값만 허용되어 오류 가능성을 줄입니다.
+
+    2. switch문과 자연스럽게 연동
+    enum은 switch문에서 정확하고 빠르게 동작하며, 예외나 버그 가능성을 줄여줍니다.
+
+    3. 타입이기 때문에 필드나 메서드 추가로 기능 확장 용이
+    enum은 생성자, 필드, 메서드를 가질 수 있어 상수 이상으로 복잡한 동작이나 속성을 구현할 수 있습니다.
+
+    4. 가독성과 그룹화
+    상태를 수(데이터)가 아닌 이름으로 나타내기 때문에 가독성이 좋음.
     관련된 상수를 하나의 그룹으로 묶어 의미론적으로 표현 가능합니다.
     예를 들어, 상태코드를 int 상수로 나열하는 것보다 enum Status { SUCCESS, ERROR }가 더 명확합니다.
 
-    2. 타입 안정성
-    int나 String 상수는 다른 값을 넣을 수 있지만, enum은 지정된 값만 허용되어 오류 가능성을 줄입니다.
-
-    3. 추가 기능 확장 용이
-    enum은 생성자, 필드, 메서드를 가질 수 있어 상수 이상으로 복잡한 동작이나 속성을 구현할 수 있습니다.
-
-    4. 비교 연산이 간단하고 안전
-    ==로 객체 비교가 가능하며, equals보다 더 안전하고 빠릅니다.
-
-    5. switch문과 자연스럽게 연동
-    enum은 switch문에서 정확하고 빠르게 동작하며, 예외나 버그 가능성을 줄여줍니다.
 */
 }

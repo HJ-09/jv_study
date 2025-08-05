@@ -2,12 +2,12 @@ package com.kosmo.advance.ex;
 
 public class S15Synchronized {
     /*
-    *
+
 ⸻
 
 1. 코드 간의 비동기 실행 현상과 해결 (Thread 간의 실행 순서 문제)
-	•	설명: 멀티스레드에서는 각 스레드가 독립적으로 실행되므로, 어떤 코드가 먼저 실행될지 보장할 수 없습니다. 이것이 “코드 간의 비동기 실행”입니다.
-	•	해결 방법: join() 메서드를 통해 특정 스레드의 작업이 끝날 때까지 기다릴 수 있습니다.
+	•	설명: 멀티스레드에서는 각 스레드가 독립적으로 실행되므로, 어떤 코드가 먼저 실행될지 보장할 수 없습니다. 이것이 “코드 간의 비동기 실행(async)”입니다.
+	•	자바에서 해결 방법: join() 메서드를 통해 특정 스레드의 작업이 끝날 때까지 기다릴 수 있습니다.
 	•	예제:
 
         Thread t1 = new Thread(() -> {
@@ -21,13 +21,14 @@ public class S15Synchronized {
         t1.start();
         t1.join(); // t1이 끝날 때까지 대기
         t2.start(); // 그 후에 t2 실행
-
+        //t2.join(); ⇒ 이런 경우라면, main()이 기다림
 
 
 ⸻
 
 2. 공유 자원의 비동기 문제 (데이터 일관성 문제)
 	•	설명: 여러 스레드가 동시에 하나의 공유 변수나 객체를 수정할 경우, 순서와 타이밍에 따라 잘못된 결과가 발생할 수 있습니다.
+	         (멀티 스레드가 공유자원을 동시에 수정할 때 반영되지 않는 스레드가 존재)
 	•	해결 방법: synchronized 키워드 또는 AtomicInteger 같은 동기화된 클래스 사용.
 	•	예제 (synchronized 사용):
 
@@ -52,12 +53,15 @@ public class S15Synchronized {
 	•	예제:
 
         public synchronized void method() {
-            // 메서드 전체가 동기화됨
+            // 메서드 전체가 동기화됨 (메서드가 포함된 필드를 수정할 때만 사용가능, static은 사용 x)
         }
 
         public void blockMethod() {
-            synchronized (this) {
                 // 특정 블록만 동기화
+            synchronized (this) {
+                //this → lock 기준 객체. 이 경우는 i를 포함하는 객체 사용해야함.
+                //i가 만약 클래스변수(static)이면 별도의 static 필드의 lock 객체를 만들어야함. static은 this가 없어서^^
+                i++;
             }
         }
 

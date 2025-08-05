@@ -4,7 +4,7 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 class Game {
-    int x; //AtomicInteger를 사용해도 완전히 안전한 공유자원이 될 수 없음
+    int x;
     int y;
 
     public synchronized void increamentX(){
